@@ -1,5 +1,7 @@
 # Solución de Itziar Zameza García al JS-palettes-exercise de Adalab
 
+** en Master Ejercicio completo. En ramas, cada fase del ejercicio**
+
 ## 1º Todo es color entre tú y tus arrays...
 
 Vamos a sacar a la diseñadora que llevamos dentro: queremos pintar paletas que podríamos usar en diferentes páginas web, y como somos unas freaks pues a cada paleta le ponemos nombres de naves espaciales de películas, a lo loco.
