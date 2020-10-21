@@ -66,19 +66,35 @@ const filterElements = () => {
   listenElements();
 };
 
-fetch(
-  "https://beta.adalab.es/ejercicios-extra/js-ejercicio-de-paletas/data/palettes.json"
-)
-  .then((response) => response.json()) //quién dice 'response' dice 'Itzi'
-  .then((data) => {
-    palettesArray = data.palettes;
-    // console.log(palettesArray);
+const getDataFromAPI = () => {
+  const localSt = localStorage.getItem("mysearch");
+  if (!localSt) {
+    fetch(
+      "https://beta.adalab.es/ejercicios-extra/js-ejercicio-de-paletas/data/palettes.json"
+    )
+      .then((response) => response.json()) //quién dice 'response' dice 'Itzi'
+      .then((data) => {
+        palettesArray = data.palettes;
+        // console.log(palettesArray);
+        for (const palette of palettesArray) {
+          pintarElementos(palette); //le mando sólo el objeto palette para usar la función igual que antes.
+        }
+        localStorage.setItem("mysearch", JSON.stringify(palettesArray));
+        listenElements();
+      })
+      .catch((error) => console.log(`error: ${error}`));
+  } else {
+    console.log("ya tengo localST");
+    palettesArray = JSON.parse(localStorage.getItem("mysearch"));
     for (const palette of palettesArray) {
       pintarElementos(palette); //le mando sólo el objeto palette para usar la función igual que antes.
     }
     listenElements();
-  })
-  .catch((error) => console.log(`error: ${error}`));
+  }
+};
 
 const inputEl = document.querySelector(".js-input");
 inputEl.addEventListener("keyup", filterElements);
+
+//START APLICATION
+getDataFromAPI();
