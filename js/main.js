@@ -35,6 +35,4 @@ fetch(
     palettesArray = data.palettes[0]; //en este caso sólo hay un objeto paleta y lo tengo en variable global.
     pintarElementos();
   })
-  .catch((error) => console.log(`error: ${error}`)); */
-
-
+  .catch((error) => console.log(`error: ${error}`));
