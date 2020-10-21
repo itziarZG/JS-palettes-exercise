@@ -67,8 +67,10 @@ const filterElements = () => {
 };
 
 const getDataFromAPI = () => {
-  const localSt = localStorage.getItem("mysearch");
+  //si puedo recuperar algo de LS es que ya había visitado la página y no debo hacer el fetch.
+  const localSt = localStorage.getItem("mysearch"); //esto dará null si no hay búsqueda anterior.
   if (!localSt) {
+    //no hay búsqueda anterior, hago el fetch
     fetch(
       "https://beta.adalab.es/ejercicios-extra/js-ejercicio-de-paletas/data/palettes.json"
     )
@@ -84,6 +86,7 @@ const getDataFromAPI = () => {
       })
       .catch((error) => console.log(`error: ${error}`));
   } else {
+    //si hay búsqueda anterior le doy al array el valor que hay en LS
     console.log("ya tengo localST");
     palettesArray = JSON.parse(localStorage.getItem("mysearch"));
     for (const palette of palettesArray) {
