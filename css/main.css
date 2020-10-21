@@ -4,6 +4,7 @@
 }
 .color_palette {
   display: flex;
+  width: fit-content;
 }
 .color_item {
   border: 1px solid black;
@@ -12,4 +13,7 @@
 }
 .title {
   margin: 15px;
+}
+.selected {
+  border: 1px solid red;
 }

@@ -4,6 +4,7 @@
 
 // console.log("hola :)");
 const containerEl = document.querySelector(".container"); //es el main pero igual podría ser una section?
+
 let palettesArray = []; //vacio
 
 function pintarElementos(palette) {
@@ -19,6 +20,7 @@ function pintarElementos(palette) {
   //para pintarlo un poco mejor, añado un elemento y una clase a un div paleta que son los 5 cuadrados...
   const divEl = document.createElement("div");
   divEl.classList.add("color_palette");
+  divEl.classList.add("js-color_palette"); // añado esta clase para hacer el listener
 
   for (let i = 0; i < colorsArray.length; i++) {
     //recorro el array de colores para crear los cuadrados de colores
@@ -32,6 +34,21 @@ function pintarElementos(palette) {
   containerEl.appendChild(divEl);
 }
 
+const selectedItem = (ev) => {
+  //en ev.target tenemos el cuadrado clickado pero queremos darle la clase a toda la paleta... lo buscamos con parent..
+  const item = ev.target.parentElement;
+  // console.log(item);
+  item.classList.toggle("selected");
+};
+
+const listenElements = () => {
+  const paletteElem = document.querySelectorAll(".js-color_palette");
+  // console.log(paletteElem);
+  for (const pal of paletteElem) {
+    pal.addEventListener("click", selectedItem);
+  }
+};
+
 fetch(
   "https://beta.adalab.es/ejercicios-extra/js-ejercicio-de-paletas/data/palettes.json"
 )
@@ -42,5 +59,6 @@ fetch(
     for (const palette of palettesArray) {
       pintarElementos(palette); //le mando sólo el objeto palette para usar la función igual que antes.
     }
+    listenElements();
   })
   .catch((error) => console.log(`error: ${error}`));
