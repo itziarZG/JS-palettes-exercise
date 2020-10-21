@@ -8,6 +8,8 @@ const containerEl = document.querySelector(".container"); //es el main pero igua
 let palettesArray = []; //vacio
 
 function pintarElementos(palette) {
+  //limpiar lo anterior porque ahora es llamada de otros sitios.
+
   //VOY A EMPEZAR A PINTAR LAS PALETAS. como un h2 más divs de colores.
   const h2El = document.createElement("h2"); //elemento html h2 creado en la "nada"
   h2El.classList.add("title"); //le añado una clase para el título
@@ -49,16 +51,34 @@ const listenElements = () => {
   }
 };
 
+const filterElements = () => {
+  const inputValue = inputEl.value;
+  const newPalettesArray = palettesArray.filter((pal) => {
+    const loweName = pal.name.toLowerCase();
+    if (loweName.includes(`${inputValue}`)) return pal; // la búsqueda era caseSensitive y mejor así.
+  });
+  //en este punto tenemos la info de las paletas filtradas en newPalettesArray
+  //para pintarlas con la misma función anterior.. de nuevo repetir for. falta optimizar...Igual que la limpieza del div
+  containerEl.innerHTML = "";
+  for (const palette of newPalettesArray) {
+    pintarElementos(palette); //le mando sólo el objeto palette para usar la función igual que antes.
+  }
+  listenElements();
+};
+
 fetch(
   "https://beta.adalab.es/ejercicios-extra/js-ejercicio-de-paletas/data/palettes.json"
 )
   .then((response) => response.json()) //quién dice 'response' dice 'Itzi'
   .then((data) => {
-    palettesArray = data.palettes; //en este caso sólo hay un objeto paleta y lo tengo en variable global.
-    console.log(palettesArray);
+    palettesArray = data.palettes;
+    // console.log(palettesArray);
     for (const palette of palettesArray) {
       pintarElementos(palette); //le mando sólo el objeto palette para usar la función igual que antes.
     }
     listenElements();
   })
   .catch((error) => console.log(`error: ${error}`));
+
+const inputEl = document.querySelector(".js-input");
+inputEl.addEventListener("keyup", filterElements);

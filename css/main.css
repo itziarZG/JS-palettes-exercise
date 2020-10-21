@@ -6,6 +6,9 @@
   display: flex;
   width: fit-content;
 }
+.input {
+  width: fit-content;
+}
 .color_item {
   border: 1px solid black;
   height: 80px;
